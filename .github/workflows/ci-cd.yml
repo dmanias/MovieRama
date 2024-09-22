@@ -26,7 +26,7 @@ jobs:
         run: mvn test
 
       - name: Build Docker image
-        run: docker build -t myapp .
+        run: docker build -t movie-rama .
 
       - name: Push to Docker Hub
         env:
@@ -34,5 +34,5 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-          docker tag myapp $DOCKER_USERNAME/myapp:latest
-          docker push $DOCKER_USERNAME/myapp:latest
+          docker tag movie-rama $DOCKER_USERNAME/movie-rama:latest
+          docker push $DOCKER_USERNAME/movie-rama:latest
