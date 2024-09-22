@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout}">
+<head>
+    <title>Home - MovieRama</title>
+    <script th:src="@{/js/voting.js}"></script>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Welcome to MovieRama</h1>
+
+    <div class="mb-3">
+        <label for="sortBy" class="form-label">Sort by:</label>
+        <select id="sortBy" class="form-select" onchange="window.location.href='/?sortBy=' + this.value">
+            <option value="date" th:selected="${sortBy == 'date'}">Date</option>
+            <option value="likes" th:selected="${sortBy == 'likes'}">Likes</option>
+            <option value="hates" th:selected="${sortBy == 'hates'}">Hates</option>
+        </select>
+    </div>
+
+    <div th:if="${#lists.isEmpty(movies)}" class="alert alert-info">
+        No movies found. Be the first to add a movie!
+    </div>
+
+    <div th:if="${not #lists.isEmpty(movies)}">
+        <div th:each="movie : ${movies}" class="card mb-3" th:data-movie-id="${movie.id}">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${movie.title}">Movie Title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    By <a th:href="@{'/users/' + ${movie.submittedBy.id} + '/movies'}" th:text="${movie.submittedBy != null ? movie.submittedBy.username : 'Unknown'}">Username</a>
+                </h6>
+                <p class="card-text" th:text="${movie.description}">Movie description</p>
+                <p class="card-text">
+                    <small class="text-muted" th:text="${#temporals.format(movie.publicationDate, 'dd-MM-yyyy HH:mm')}">01-01-2024 12:00</small>
+                </p>
+                <div class="d-flex justify-content-between"
+                     sec:authorize="isAuthenticated()"
+                     th:if="${movie.submittedBy.id != #authentication.principal.id}">
+                    <div class="btn-group" role="group" aria-label="Voting buttons">
+                        <button type="button" class="btn btn-outline-success" th:onclick="'vote(' + ${movie.id} + ', \'LIKE\')'">
+                            Like <span class="badge bg-secondary" th:text="${movie.likeCount}">0</span>
+                        </button>
+                        <button type="button" class="btn btn-outline-danger" th:onclick="'vote(' + ${movie.id} + ', \'HATE\')'">
+                            Hate <span class="badge bg-secondary" th:text="${movie.hateCount}">0</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

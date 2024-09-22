@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title th:text="${'Movies by ' + (user != null ? user.username : 'User')}">Movies by User</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1 th:text="${'Movies by ' + (user != null ? user.username : 'User')}">Movies by User</h1>
+
+    <div th:if="${#lists.isEmpty(movies)}" class="alert alert-info">
+        This user hasn't submitted any movies yet.
+    </div>
+
+    <div th:if="${not #lists.isEmpty(movies)}">
+        <div th:each="movie : ${movies}" class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${movie.title}">Movie Title</h5>
+                <p class="card-text" th:text="${movie.description}">Movie description</p>
+                <p class="card-text">
+                    <small class="text-muted" th:text="${#temporals.format(movie.publicationDate, 'dd-MM-yyyy HH:mm')}">01-01-2024 12:00</small>
+                </p>
+                <p class="card-text">
+                    Likes: <span th:text="${movie.likeCount}">0</span>
+                    Hates: <span th:text="${movie.hateCount}">0</span>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <a th:href="@{/}" class="btn btn-primary mt-3">Back to All Movies</a>
+</div>
+</body>
+</html>

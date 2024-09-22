@@ -1,0 +1,7 @@
+<ol th:fragment="breadcrumb" class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+    <li th:each="item, iterStat : ${breadcrumbs}" class="breadcrumb-item" th:classappend="${iterStat.last} ? 'active'">
+        <a th:unless="${iterStat.last}" th:href="${item.url}" th:text="${item.label}"></a>
+        <span th:if="${iterStat.last}" th:text="${item.label}"></span>
+    </li>
+</ol>
