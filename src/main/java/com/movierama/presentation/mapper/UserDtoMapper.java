@@ -26,6 +26,6 @@ public class UserDtoMapper {
         );
     }
 
-    // You might want to add a method to convert from Domain to DTO if needed for responses
+    // Might add a method to convert from Domain to DTO if needed for responses
     // public UserResponseDto toDto(User user) { ... }
 }

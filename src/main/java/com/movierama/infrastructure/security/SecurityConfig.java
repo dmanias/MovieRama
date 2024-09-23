@@ -17,6 +17,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/register", "/login", "/error", "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**").permitAll()
                         .requestMatchers("/movies/add", "/api/votes").authenticated()
                         .anyRequest().authenticated()
                 )
@@ -29,7 +30,7 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 )
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/votes")); // Disable CSRF for /api/votes temporarily for testing
+                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/votes"));
 
         return http.build();
     }

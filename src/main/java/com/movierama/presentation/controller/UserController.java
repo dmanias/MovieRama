@@ -4,6 +4,7 @@ import com.movierama.application.usecase.RegisterUserUseCase;
 import com.movierama.domain.model.User;
 import com.movierama.presentation.dto.UserRegistrationRequest;
 import com.movierama.presentation.mapper.UserDtoMapper;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @Controller
+@Tag(name = "Users", description = "User management APIs")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);

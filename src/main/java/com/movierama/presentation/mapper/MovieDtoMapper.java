@@ -20,6 +20,6 @@ public class MovieDtoMapper {
         );
     }
 
-    // You might want to add a method to convert from Domain to DTO if needed for responses
+    // Might add a method to convert from Domain to DTO if needed for responses
     // public MovieResponseDto toDto(Movie movie) { ... }
 }
