@@ -1,7 +1,9 @@
 package com.movierama.domain.service;
 
+import com.movierama.domain.model.Movie;
 import com.movierama.domain.model.Vote;
 import com.movierama.domain.model.VoteType;
+import com.movierama.domain.repository.MovieRepository;
 import com.movierama.domain.repository.VoteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,18 +14,31 @@ import java.util.Optional;
 public class VoteDomainServiceImpl implements VoteDomainService {
 
     private final VoteRepository voteRepository;
+    private final MovieRepository movieRepository;
 
     @Autowired
-    public VoteDomainServiceImpl(VoteRepository voteRepository) {
+    public VoteDomainServiceImpl(VoteRepository voteRepository, MovieRepository movieRepository) {
         this.voteRepository = voteRepository;
+        this.movieRepository = movieRepository;
     }
 
     @Override
     public void castVote(Vote vote) {
-        if (vote == null) {
-            throw new IllegalArgumentException("Vote cannot be null.");
+        if (vote.getUser().equals(vote.getMovie().getSubmittedBy())) {
+            throw new IllegalStateException("Users cannot vote for their own movies");
         }
+
         voteRepository.save(vote);
+        updateMovieVoteCount(vote.getMovie(), vote.getVoteType());
+    }
+
+    private void updateMovieVoteCount(Movie movie, VoteType voteType) {
+        if (voteType == VoteType.LIKE) {
+            movie.incrementLikeCount();
+        } else {
+            movie.incrementHateCount();
+        }
+        movieRepository.save(movie);
     }
 
     @Override
