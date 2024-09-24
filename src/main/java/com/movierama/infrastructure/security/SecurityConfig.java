@@ -17,7 +17,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/home", "/register", "/login", "/error", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/webjars/**").permitAll()
+                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-ui.html", "/api-docs/**").permitAll()
                         .requestMatchers("/movies/add", "/api/votes").authenticated()
                         .anyRequest().authenticated()
                 )
@@ -30,7 +30,11 @@ public class SecurityConfig {
                         .logoutSuccessUrl("/")
                         .permitAll()
                 )
-                .csrf(csrf -> csrf.ignoringRequestMatchers("/h2-console/**", "/api/votes"));
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/h2-console/**", "/api/votes")
+                        .ignoringRequestMatchers("/swagger-ui/**", "/v3/api-docs/**") // Add this line
+                )
+                .headers(headers -> headers.frameOptions().disable()); // Add this line if you're using H2 console
 
         return http.build();
     }

@@ -7,6 +7,7 @@ import com.movierama.domain.model.User;
 import com.movierama.domain.repository.UserRepository;
 import com.movierama.presentation.dto.MovieSubmissionRequest;
 import com.movierama.presentation.mapper.MovieDtoMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import jakarta.validation.Valid;
 import java.util.List;
 
 @Controller
-@Tag(name = "Movies", description = "Movie management endpoints")
+@Tag(name = "Movies", description = "Movie management APIs")
 public class MovieController {
     private static final Logger logger = LoggerFactory.getLogger(MovieController.class);
 
@@ -40,6 +41,7 @@ public class MovieController {
     }
 
     @GetMapping("/")
+    @Operation(summary = "Get home page", description = "Retrieves the home page with movies")
     public String home(Model model, @RequestParam(defaultValue = "date") String sortBy) {
         logger.info("Fetching movies for home page, sorted by: {}", sortBy);
         try {
@@ -56,6 +58,7 @@ public class MovieController {
     }
 
     @GetMapping("/movies/add")
+    @Operation(summary = "Show add movie form", description = "Displays the form to add a new movie")
     public String showAddMovieForm(Model model) {
         logger.info("Showing add movie form");
         model.addAttribute("movieSubmissionRequest", new MovieSubmissionRequest());

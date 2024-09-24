@@ -4,6 +4,7 @@ import com.movierama.application.usecase.RegisterUserUseCase;
 import com.movierama.domain.model.User;
 import com.movierama.presentation.dto.UserRegistrationRequest;
 import com.movierama.presentation.mapper.UserDtoMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 @Controller
-@Tag(name = "Users", description = "User management APIs")
+@Tag(name = "Votes", description = "Vote management APIs")
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
@@ -31,6 +32,7 @@ public class UserController {
     }
 
     @GetMapping("/register")
+    @Operation(summary = "Show registration form", description = "Displays the user registration form")
     public String showRegistrationForm(Model model) {
         logger.info("Showing registration form");
         model.addAttribute("userRegistrationRequest", new UserRegistrationRequest());
@@ -38,6 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/register")
+    @Operation(summary = "Register user", description = "Processes the user registration request")
     public String registerUser(@Valid @ModelAttribute("userRegistrationRequest") UserRegistrationRequest request,
                                BindingResult bindingResult,
                                Model model) {
