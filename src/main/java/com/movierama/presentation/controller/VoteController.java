@@ -6,8 +6,6 @@ import com.movierama.domain.model.Movie;
 import com.movierama.domain.model.Vote;
 import com.movierama.domain.repository.MovieRepository;
 import com.movierama.presentation.dto.VoteRequest;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +15,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/votes")
-@Tag(name = "Vote", description = "Vote API")
 public class VoteController {
 
     private final VoteForMovieUseCase voteForMovieUseCase;
@@ -29,7 +26,6 @@ public class VoteController {
     }
 
     @PostMapping
-    @Operation(summary = "Cast a vote", description = "Cast a vote for a movie")
     public ResponseEntity<Map<String, Object>> castVote(@Valid @RequestBody VoteRequest request, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         Movie movie = movieRepository.findById(request.getMovieId())
