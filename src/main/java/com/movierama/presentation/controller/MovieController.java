@@ -7,6 +7,9 @@ import com.movierama.domain.model.User;
 import com.movierama.domain.repository.UserRepository;
 import com.movierama.presentation.dto.MovieSubmissionRequest;
 import com.movierama.presentation.mapper.MovieDtoMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +43,9 @@ public class MovieController {
     }
 
     @GetMapping("/")
+//    @Operation(summary = "Get all movies", description = "Retrieves a list of all movies, optionally sorted")
+//    @ApiResponse(responseCode = "200", description = "Successful retrieval of movies",
+//            content = @Content(mediaType = "text/html"))
     public String home(Model model, @RequestParam(defaultValue = "date") String sortBy) {
         logger.info("Fetching movies for home page, sorted by: {}", sortBy);
         try {
