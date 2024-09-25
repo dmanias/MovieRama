@@ -86,6 +86,11 @@ This separation enhances maintainability, testability, and scalability of the ap
 
 - Spring profiles used for managing different environments (dev, prod)
 
+## Search Functionality
+
+- The newly implemented search feature allows users to search for movies by title or description:
+
+
 ## Areas for Improvement and Future Enhancements
 
 1. **Caching Strategy**:
@@ -129,7 +134,6 @@ This separation enhances maintainability, testability, and scalability of the ap
     - Implement API versioning to support future changes without breaking existing clients
 
 13. **UI/UX Improvements**:
-    - Enhance search functionality to allow users to find movies by title or description
     - Ensure the application follows web accessibility guidelines (WCAG)
 
 

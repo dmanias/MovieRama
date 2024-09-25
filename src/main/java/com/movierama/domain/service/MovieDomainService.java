@@ -33,4 +33,5 @@ public interface MovieDomainService {
      * @return a sorted list of movies
      */
     List<Movie> getMoviesSorted(String sortBy);
+    List<Movie> searchMovies(String query);
 }

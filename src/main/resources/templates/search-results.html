@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Search Results - MovieRama</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <h1>Search Results for: <span th:text="${searchQuery}"></span></h1>
+
+    <div th:if="${#lists.isEmpty(movies)}" class="alert alert-info">
+        No movies found matching your search.
+    </div>
+
+    <div th:if="${not #lists.isEmpty(movies)}">
+        <div th:each="movie : ${movies}" class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${movie.title}">Movie Title</h5>
+                <h6 class="card-subtitle mb-2 text-muted">
+                    By <a th:href="@{'/users/' + ${movie.submittedBy.id} + '/movies'}" th:text="${movie.submittedBy != null ? movie.submittedBy.username : 'Unknown'}">Username</a>
+                </h6>
+                <p class="card-text" th:text="${movie.description}">Movie description</p>
+                <p class="card-text">
+                    <small class="text-muted" th:text="${#temporals.format(movie.publicationDate, 'dd-MM-yyyy HH:mm')}">01-01-2024 12:00</small>
+                </p>
+                <!-- Add voting buttons here if needed -->
+            </div>
+        </div>
+    </div>
+
+    <a href="/" class="btn btn-primary">Back to All Movies</a>
+</div>
+</body>
+</html>

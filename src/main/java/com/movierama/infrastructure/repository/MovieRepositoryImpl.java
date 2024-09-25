@@ -103,4 +103,11 @@ public class MovieRepositoryImpl implements MovieRepository {
             throw new RuntimeException("Failed to find sorted movies: " + e.getMessage(), e);
         }
     }
+    @Override
+    public List<Movie> searchMovies(String query) {
+        List<MovieEntity> movieEntities = movieJpaRepository.findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(query, query);
+        return movieEntities.stream()
+                .map(movieEntityMapper::toDomain)
+                .collect(Collectors.toList());
+    }
 }

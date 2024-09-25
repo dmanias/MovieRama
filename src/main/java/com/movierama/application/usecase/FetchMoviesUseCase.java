@@ -40,4 +40,8 @@ public class FetchMoviesUseCase {
         logger.info("Fetched {} movies sorted by {}", movies.size(), sortBy);
         return movies;
     }
+
+    public List<Movie> searchMovies(String query) {
+        return movieDomainService.searchMovies(query);
+    }
 }

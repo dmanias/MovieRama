@@ -20,4 +20,6 @@ public interface MovieJpaRepository extends JpaRepository<MovieEntity, Long> {
 
     @Query("SELECT m FROM MovieEntity m ORDER BY m.publicationDate DESC")
     List<MovieEntity> findAllOrderByPublicationDateDesc();
+
+    List<MovieEntity> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String title, String description);
 }

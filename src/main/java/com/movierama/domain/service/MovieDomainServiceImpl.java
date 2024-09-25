@@ -69,4 +69,8 @@ public class MovieDomainServiceImpl implements MovieDomainService {
             throw new RuntimeException("Failed to retrieve sorted movies: " + e.getMessage(), e);
         }
     }
+    @Override
+    public List<Movie> searchMovies(String query) {
+        return movieRepository.searchMovies(query);
+    }
 }

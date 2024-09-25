@@ -10,4 +10,5 @@ public interface MovieRepository {
     List<Movie> findAll();
     List<Movie> findByUserId(Long userId);
     List<Movie> findAllSorted(String sortBy);
+    List<Movie> searchMovies(String query);
 }

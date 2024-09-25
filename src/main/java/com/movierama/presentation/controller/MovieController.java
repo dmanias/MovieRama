@@ -99,4 +99,12 @@ public class MovieController {
             return "error";
         }
     }
+
+    @GetMapping("/search")
+    public String searchMovies(@RequestParam("query") String query, Model model) {
+        List<Movie> searchResults = fetchMoviesUseCase.searchMovies(query);
+        model.addAttribute("movies", searchResults);
+        model.addAttribute("searchQuery", query);
+        return "search-results";
+    }
 }
