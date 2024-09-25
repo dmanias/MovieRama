@@ -41,7 +41,7 @@ public class MovieController {
     }
 
     @GetMapping("/")
-    @Operation(summary = "Get home page", description = "Retrieves the home page with movies")
+    @Operation(summary = "Get home page", description = "Retrieves the home page with movies sorted by the specified criteria")
     public String home(Model model, @RequestParam(defaultValue = "date") String sortBy) {
         logger.info("Fetching movies for home page, sorted by: {}", sortBy);
         try {
@@ -66,6 +66,7 @@ public class MovieController {
     }
 
     @PostMapping("/movies/add")
+    @Operation(summary = "Add a new movie", description = "Adds a new movie to the database")
     public String addMovie(@Valid @ModelAttribute("movieSubmissionRequest") MovieSubmissionRequest request,
                            Authentication authentication) {
         logger.info("Processing add movie request: {}", request.getTitle());
@@ -82,6 +83,7 @@ public class MovieController {
     }
 
     @GetMapping("/users/{userId}/movies")
+    @Operation(summary = "Get user's movies", description = "Retrieves all movies submitted by a specific user")
     public String getMoviesByUser(@PathVariable Long userId, Model model) {
         logger.info("Fetching movies for user ID: {}", userId);
         try {
@@ -89,7 +91,6 @@ public class MovieController {
             logger.info("Fetched {} movies for user ID: {}", userMovies.size(), userId);
             model.addAttribute("movies", userMovies);
 
-            // Fetch the user and add to the model
             userRepository.findById(userId).ifPresent(user -> model.addAttribute("user", user));
 
             return "user-movies";
@@ -101,10 +102,19 @@ public class MovieController {
     }
 
     @GetMapping("/search")
+    @Operation(summary = "Search movies", description = "Searches for movies based on the provided query")
     public String searchMovies(@RequestParam("query") String query, Model model) {
-        List<Movie> searchResults = fetchMoviesUseCase.searchMovies(query);
-        model.addAttribute("movies", searchResults);
-        model.addAttribute("searchQuery", query);
-        return "search-results";
+        logger.info("Searching movies with query: {}", query);
+        try {
+            List<Movie> searchResults = fetchMoviesUseCase.searchMovies(query);
+            logger.info("Found {} movies matching the search query", searchResults.size());
+            model.addAttribute("movies", searchResults);
+            model.addAttribute("searchQuery", query);
+            return "search-results";
+        } catch (Exception e) {
+            logger.error("Error searching movies: ", e);
+            model.addAttribute("error", "An error occurred while searching for movies. Please try again later.");
+            return "error";
+        }
     }
 }
