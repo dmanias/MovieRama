@@ -13,6 +13,7 @@ MovieRama is a social sharing platform for movie enthusiasts. Users can share th
 - RESTful API with JWT authentication
 - Rate limiting to prevent abuse
 - Secure password hashing
+- Search functionality for movies
 
 ## Tech Stack
 
@@ -23,90 +24,95 @@ MovieRama is a social sharing platform for movie enthusiasts. Users can share th
 - Maven for dependency management and build automation
 - Thymeleaf for server-side HTML templating
 - Bootstrap 5 for responsive front-end design
-- Docker for containerization
-- GitHub Actions for CI/CD
 
 ## Prerequisites
 
 - Java Development Kit (JDK) 17 or later
 - Maven 3.6+
 - PostgreSQL 13+
-- Docker (optional, for containerized deployment)
 
-## Installation
+## Installation and Running Instructions
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/yourusername/MovieRama.git
-   cd MovieRama
-   ```
+There are three ways to run the MovieRama application:
 
-2. Configure the database:
-    - Create a PostgreSQL database named `movierama_db`
-    - Update `src/main/resources/application.properties` with your database credentials
+1. Using the provided JAR file
+2. Local setup with Maven
+3. Using Docker
 
-3. Build the project:
+For detailed instructions on each method, please refer to the following documents in the `deliverables` folder:
+
+- `RunningMovieRama.doc`: Step-by-step guide for running the application using the provided JAR file.
+- `MovieRama_Architecture.md`: Detailed explanation of the application's architecture and design decisions.
+- `Docker.md`: Instructions for running MovieRama using Docker.
+- `movierama-0.0.1-SNAPSHOT.jar`: The runnable JAR file for the application.
+
+To quickly run the application using the JAR file, use the following command:
+```
+java -jar deliverables/movierama-0.0.1-SNAPSHOT.jar
+```
+
+### Local Setup
+
+1. **Database Setup**
+   - Install PostgreSQL if not already installed
+   - Create a database named `movierama_dev`:
+     ```
+     createdb movierama_dev
+     ```
+   - Update `src/main/resources/application-dev.properties` with your database credentials:
+     ```
+     spring.datasource.url=jdbc:postgresql://localhost:5432/movierama_dev
+     spring.datasource.username=your_username
+     spring.datasource.password=your_password
+     ```
+
+2. **Build and Run the Application**
    ```
    mvn clean install
-   ```
-
-4. Run the application:
-   ```
-   java -jar target/movierama-0.0.1-SNAPSHOT.jar
-   ```
-
-   Or use Spring Boot Maven plugin:
-   ```
    mvn spring-boot:run
    ```
 
-5. Access the application at `http://localhost:8080`
+3. **Access the Application**
+   - Open a web browser and go to `http://localhost:8080`
 
-## Docker Deployment
+### Docker Setup
 
-1. Build the Docker image:
-   ```
-   docker build -t movierama:latest .
-   ```
+For instructions on running MovieRama using Docker, please refer to the `Docker.md` file in the `deliverables` folder. This document provides detailed steps for setting up and running the application in a Docker container.
 
-2. Run the container:
-   ```
-   docker run -p 8080:8080 -e SPRING_PROFILES_ACTIVE=prod movierama:latest
-   ```
+### Running JAR File
+
+1. Navigate to the deliverables folder
+2. Run the following command:
+```
+java -jar movierama-0.0.1-SNAPSHOT.jar
+```
+3. Access the application at http://localhost:8080
+
+For more detailed instructions, please refer to the `RunningMovieRama.doc` in the `deliverables` folder.
+
+## Accessing the Application
+
+1. Register a new user account
+2. Log in with your credentials
+3. Start adding movies and interacting with the application
 
 ## API Documentation
 
-API documentation is available via Swagger UI. After starting the application, visit:
+API documentation is available via Swagger UI at:
 ```
 http://localhost:8080/swagger-ui.html
 ```
 
-## Running Tests
+## Troubleshooting
 
-Execute the test suite using Maven:
-```
-mvn test
-```
-
-## Security
-
-- JWT is used for stateless authentication
-- Passwords are hashed using BCrypt
-- Rate limiting is implemented to prevent brute-force attacks
-- Input validation and sanitization are in place to prevent injection attacks
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-- [Spring Boot](https://spring.io/projects/spring-boot)
-- [Bootstrap](https://getbootstrap.com/)
-- [PostgreSQL](https://www.postgresql.org/)
+- If port 8080 is already in use locally, you can change the port in `application-dev.properties`:
+  ```
+  server.port=8081
+  ```
+- Ensure that the PostgreSQL service is running before starting the application
+- For any issues, please check the application logs in the console
 
 ## Contact
 
-Your Name - [@yourtwitter](https://twitter.com/yourtwitter) - email@example.com
-
-Project Link: [https://github.com/yourusername/MovieRama](https://github.com/yourusername/MovieRama)
+For any questions or issues, please contact:
+Dimosthenis Manias - dimosthenis.manias@gmail.com
