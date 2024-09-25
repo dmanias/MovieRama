@@ -134,6 +134,7 @@ This separation enhances maintainability, testability, and scalability of the ap
     - Implement API versioning to support future changes without breaking existing clients
 
 13. **UI/UX Improvements**:
+    - Add delete functionality for user-submitted movies, etc.
     - Ensure the application follows web accessibility guidelines (WCAG)
 
 
